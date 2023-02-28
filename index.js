@@ -33,7 +33,8 @@ function setData(){
     let data = {
         id : +new Date,
         nama : inputNama.value,
-        umur : inputUmur.value
+        umur : inputUmur.value,
+        isComplete : false
     }
     return data;
 };
@@ -45,27 +46,36 @@ function load(){
         <h4> Nama : ${person.nama}</h4>
         <h4> Umur : ${person.umur}</h4>
         <button id="delete-button" href=""> delete </button>
+        <button id="isComplete">${person.isComplete?'Tandai belum dibaca':'Tandai sudah dibaca'}</button>
         </div>
         `
     }).join("<br>");
 
     let personsData = personList.querySelectorAll("#personal-data");
+    let isComplete = personList.querySelectorAll("#isComplete");
 
     for(personData of personsData){
         let deleteButton = personData.querySelector("#delete-button")
         let personId = parseInt(personData.getAttribute("data-id"));
         deleteButton?.addEventListener("click",()=>{
             deleteData(personId);
-            // console.log(personData);
+            // console.log(findById(personId));
         })
     }
 }
 
-function deleteData(personId){
-    const id = personId;
-    let data = persons.findIndex((person)=>{
+function update(){
+
+}
+
+function findById(id){
+    persons.findIndex((person)=>{
         return person.id == id;
     })
+}
+
+function deleteData(id){
+    let data = findById(id);
     if(data !== -1){
         persons.splice(data, 1);
         setStorage();
