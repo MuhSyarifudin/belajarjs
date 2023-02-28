@@ -4,12 +4,6 @@ let inputUmur = document.querySelector(".inputumur");
 let form = document.querySelector("form");
 let persons = [];
 
-let tryButton = document.getElementById("tryButton");
-
-tryButton.addEventListener("click",()=>{
-
-})
-
 if(localStorage == undefined){
     console.error("Maaf browser anda tidak tersedia localStorage");
 }
@@ -31,17 +25,9 @@ form.addEventListener("submit",(e)=>{
 
 })
 
-const list = persons.map((person)=>{
-    return `
-    <div data-id="${person.id}" id="personal-data">
-    <h4> Nama : ${person.nama}</h4>
-    <h4> Umur : ${person.umur}</h4>
-    <button id="delete-button" href=""> delete </button>
-    </div>
-    `
-}).join("<br>");;
-
-personList.innerHTML = list;
+window.addEventListener("DOMContentLoaded",()=>{
+    load();
+})
 
 function setData(){
     let data = {
@@ -51,17 +37,6 @@ function setData(){
     }
     return data;
 };
-
-let personsData = personList.querySelectorAll("#personal-data");
-
-for(personData of personsData){
-    let deleteButton = personData.querySelector("#delete-button")
-    let personId = parseInt(personData.getAttribute("data-id"));
-    deleteButton?.addEventListener("click",()=>{
-        // deleteData(personId);
-        console.log(personData);
-    })
-}
 
 function load(){
     personList.innerHTML = persons.map((person)=>{
@@ -73,6 +48,17 @@ function load(){
         </div>
         `
     }).join("<br>");
+
+    let personsData = personList.querySelectorAll("#personal-data");
+
+    for(personData of personsData){
+        let deleteButton = personData.querySelector("#delete-button")
+        let personId = parseInt(personData.getAttribute("data-id"));
+        deleteButton?.addEventListener("click",()=>{
+            deleteData(personId);
+            // console.log(personData);
+        })
+    }
 }
 
 function deleteData(personId){
